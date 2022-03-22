@@ -1,0 +1,21 @@
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+}
+
+input {
+  margin: 0 10px 0 0;
+}
+
+.btn-delete {
+  margin: 0 0 0 20px;
+  color: white;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+}
