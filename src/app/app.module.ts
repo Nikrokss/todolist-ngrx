@@ -7,7 +7,6 @@ import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 
 import { AppComponent } from './app.component';
-import { reducers, metaReducers } from './reducers';
 import { environment } from '../environments/environment';
 import { AppEffects } from './app.effects';
 import {TodoModule} from "./modules/todo/todo.module";
@@ -25,9 +24,7 @@ import {TodoModule} from "./modules/todo/todo.module";
         redirectTo: ''
       }
     ]),
-    StoreModule.forRoot(reducers, {
-      metaReducers
-    }),
+    StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     TodoModule,
     EffectsModule.forRoot([AppEffects])
