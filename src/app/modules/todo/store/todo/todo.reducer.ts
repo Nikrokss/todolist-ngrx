@@ -1,5 +1,7 @@
+import {createReducer, on} from "@ngrx/store";
+
 import {Todo} from '../../model/todo'
-import {TodoActions, todoActionsType} from "./todo.actions";
+import {create, deleteTask, toggle} from "./todo.actions";
 
 export const TODO_REDUCER_NODE = 'todo';
 
@@ -13,35 +15,29 @@ const initialState: TodoState = {
   todoList: []
 }
 
-export const todoReducer = (state = initialState, action: TodoActions) => {
-  switch(action.type) {
-    case todoActionsType.create:
-      return {
-        ...state,
-        idIncrement: state.idIncrement + 1,
-        todoList: [
-          ...state.todoList,
-          {
-            id: state.idIncrement,
-            name: action.payload.name,
-            completed: false
-          }
-        ]
-      };
-    case todoActionsType.toggle:
-      return {
-        ...state,
-        todoList: state.todoList.map(todo => todo.id === action.payload.id ? {
-          ...todo,
-          completed: !todo.completed
-        } : todo)
-      };
-    case todoActionsType.delete:
-      return {
-        ...state,
-        todoList: state.todoList.filter(todo => todo.id !== action.payload.id),
-      };
-    default:
-      return state;
-  }
-};
+export const todoReducer = createReducer(
+  initialState,
+  on(create, (state, {title}) => ({
+    ...state,
+    idIncrement: state.idIncrement + 1,
+    todoList: [
+      {
+        taskId: state.idIncrement,
+        title,
+        completed: false
+      },
+      ...state.todoList
+    ]
+  })),
+  on(toggle, (state, {taskId}) => ({
+    ...state,
+    todoList: state.todoList.map(task => task.taskId === taskId ? {
+      ...task,
+      completed: !task.completed
+    } : task)
+  })),
+  on(deleteTask, (state, {taskId}) => ({
+    ...state,
+    todoList: state.todoList.filter(task => task.taskId !== taskId),
+  })),
+);

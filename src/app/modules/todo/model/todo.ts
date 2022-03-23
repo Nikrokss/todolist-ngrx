@@ -1,5 +1,5 @@
 export interface Todo {
-  id: number;
-  name: string;
+  taskId: number;
+  title: string;
   completed: boolean;
 }

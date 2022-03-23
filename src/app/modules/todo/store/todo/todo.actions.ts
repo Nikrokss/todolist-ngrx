@@ -1,27 +1,16 @@
-import {Action} from "@ngrx/store";
+import {createAction, props} from "@ngrx/store";
 
-export enum todoActionsType {
-  create = '[TODO] create todo item',
-  toggle = '[TODO] toggle todo item',
-  delete = '[TODO] delete todo item',
-}
+export const create = createAction(
+  '[TODO] create todo item',
+  props<{ title: string }>()
+);
 
-export class TodoCreateAction implements Action {
-  readonly type = todoActionsType.create;
-  constructor(public payload: { name: string }) {
-  }
-}
+export const toggle = createAction(
+  '[TODO] toggle todo item',
+  props<{ taskId: number }>()
+);
 
-export class TodoDeleteAction implements Action {
-  readonly type = todoActionsType.delete;
-  constructor(public payload: { id: number }) {
-  }
-}
-
-export class TodoToggleAction implements Action {
-  readonly type = todoActionsType.toggle;
-  constructor(public payload: { id: number }) {
-  }
-}
-
-export type TodoActions = TodoCreateAction | TodoDeleteAction | TodoToggleAction;
+export const deleteTask = createAction(
+  '[TODO] deleteTask todo item',
+  props<{ taskId: number }>()
+);
